@@ -8,7 +8,7 @@
 
 这是关于Vue组件的模板和脚本部分如何协同工作的。模板和脚本构成一个单元并共享相同的数据。
 
-1. 在模板中绑定事件，下面是给按钮绑定一个点击事件的例子。
+1. 在模板中绑定事件
 ```vue
 <template>
   <button @click="handleClick">
@@ -34,7 +34,7 @@ export default {
     Tacos?
   </button>
 </template>
- 
+
 <script>
 export default {
   name: 'SingleComponent',
@@ -46,4 +46,149 @@ export default {
 }
 </script>
 ```
-3. 事件对象（event）是与特定事件相关且包含有关该事件详细信息的对象。事件对象作为参数传递给事件处理程序函数 。
+3. 绑定事件的时候获取事件对象
+```js
+<template>
+  <button
+    @click="handleClick('Tacos', $event)"
+    @mouseenter="handleMouseEnter"
+  >
+    Tacos?
+  </button>
+</template>
+
+<script>
+export default {
+  name: 'SingleComponent',
+  methods: {
+    handleClick (value, event) {
+      alert(`${value}!`)
+      console.log('click', event)
+    },
+    handleMouseEnter (event) {
+      console.log('mouse entered', event)
+    }
+  }
+}
+</script>
+```
+4. 循环绑定事件
+```js
+<template>
+  <button
+    v-for="(entry, index) in menu"
+    :key="index"
+    @click="selectEntry(entry)"
+  >
+    {{ entry }}?
+  </button>
+</template>
+
+<script>
+export default {
+  name: 'SingleComponent',
+  computed: {
+    menu: ['tacos', 'hot dogs', 'ice cream']
+  },
+  methods: {
+    selectEntry (value) {
+      alert(`${value} it is!`)
+    }
+  }
+}
+</script>
+```
+5. 生命周期
+```js
+<template>
+  <div class="traffic-light">
+    isGreen: {{ isGreen }}
+  </div>
+</template>
+<script>
+export default {
+  name: 'TrafficLight',
+  data () {
+    return {
+      isGreen: false,
+      interval: null
+    }
+  },
+  created () {
+    this.interval = setInterval(() => {
+      this.isGreen = !this.isGreen
+    }, 5 * 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
+  }
+}
+</script>
+```
+6. 引用元素
+```js
+<template>
+  <div id="canvas-example">
+    <canvas ref="canvas" height="200" width="200" />
+  </div>
+</template>
+<script>
+export default {
+  name: 'CanvasExample',
+  mounted () {
+    const ctx = this.$refs.canvas.getContext('2d')
+    ctx.fillStyle = 'rgb(200,0,0)'
+    ctx.fillRect(10, 10, 55, 50)
+
+    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)'
+    ctx.fillRect(30, 30, 55, 50)
+  }
+}
+</script>
+```
+7. 循环引用元素
+```js
+<template>
+  <ul id="dynamic-refs">
+    <li
+      v-for="entry in entries"
+      :key="entry.id"
+      :ref="`entry${entry.id}`"
+    >
+      {{ entry.title }}
+    </li>
+  </ul>
+</template>
+<script>
+export default {
+  name: 'DynamicRefs',
+  data () {
+    return {
+      entries: [
+        { id: 1, title: 'Uno' },
+        { id: 2, title: 'Due' }
+      ]
+    }
+  },
+  mounted () {
+    console.log(this.$refs.entry1)
+  }
+}
+</script>
+```
+8. 双向绑定
+```js
+<template>
+  <input v-model="name">
+</template>
+<script>
+export default {
+  name: 'ValueAndInput',
+  data () {
+    return {
+      name: ''
+    }
+  }
+}
+</script>
+```
