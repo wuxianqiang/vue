@@ -194,3 +194,24 @@ export default {
 }
 </script>
 ```
+
+```js
+<template>
+  <div class="loader">
+    <div class="loader__bar" style="{ width: `${percent}%` }" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Loader',
+  props: {
+    percent: {
+      type: Number
+      required: true
+    }
+  }
+}
+</script>
+```
+
