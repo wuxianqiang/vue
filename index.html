@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MVVM</title>
+</head>
+
+<body>
+    <!-- MVVM 双向数据绑定，特点：数据影响视图，视图影响数据 -->
+    <!-- angular 脏值检测 -->
+    <!-- Vue 数据劫持+发布订阅 -->
+
+    <script>
+        let obj = {};
+        Object.defineProperty(obj, "school", {
+            configurable: true, //是否可配置
+            // writable: true, //是否可写
+            enumerable: true, //是否可枚举
+            // value: "zfpx",
+            get() {
+                return "zfpx"
+            },
+            set(newVal) {
+                console.log(newVal)
+            }
+        })
+
+        console.log(obj.school)
+        obj.school = 100;
+        
+    </script>
+</body>
+
+</html>
