@@ -215,3 +215,41 @@ export default {
 </script>
 ```
 
+### 过滤器
+```js
+    <div id="app">
+        {{num | addYuan("￥")}}
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                num: 1
+            },
+            filters: {
+                addYuan(num, param) {
+                    return num + param
+                }
+            }
+        })
+    </script>
+```
+### 全局过滤器所以实例都可以使用
+```js
+    <div id="app">
+        {{num | addZero("￥")}}
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.filter("addZero", function (num, param) {
+            return num + param
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                num: 1
+            }
+        })
+    </script>
+```
