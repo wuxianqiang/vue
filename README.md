@@ -235,7 +235,7 @@ export default {
         })
     </script>
 ```
-### 全局过滤器所以实例都可以使用
+### 全局过滤器所有实例都可以使用
 ```js
     <div id="app">
         {{num | addZero("￥")}}
