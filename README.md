@@ -238,11 +238,11 @@ export default {
 ### 全局过滤器所有实例都可以使用
 ```js
     <div id="app">
-        {{num | addZero("￥")}}
+        {{num | addYuan("￥")}}
     </div>
     <script src="js/vue.js"></script>
     <script>
-        Vue.filter("addZero", function (num, param) {
+        Vue.filter("addYuan", function (num, param) {
             return num + param
         })
         let vm = new Vue({
