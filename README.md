@@ -253,3 +253,22 @@ export default {
         })
     </script>
 ```
+### 过滤器除了可以使用在`{{}}`中还可以在绑定属性中使用
+```js
+    <div id="app">
+        <div :class="num | addIcon('-icon')"></div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+
+        Vue.filter("addIcon", function (num, param) {
+            return num + param
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                num: 1,
+            }
+        })
+    </script>
+```
